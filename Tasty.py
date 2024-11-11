@@ -20,6 +20,7 @@ class Tasty:
 
     def __init__(self):
         self.tasks={}
+        self.trashs={}
 
     def display_tasks(self):
         for task_name, status in self.tasks.items():
@@ -106,15 +107,32 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         with open("saved_data.json", "w") as fp:
             json.dump(self.tasks,fp)
 
+    def load(self):
+        with open('saved_data.json', 'r') as fp:
+            d = json.load(fp)
+            print(d)
 
+    def exit(self):
+        print("Bye bye")
+        exit()
 
+    def clear(self):
+        os.system('cls' if os.name == "nt" else "clear")
+
+    def remove(self,task_name):
+        del self.tasks[task_name]
+        self.trashs[task_name] = 'not yet'
+
+    def trash(self):
+         for task_name, status in self.trashs.items():
+            print("- ",task_name,status)
 
 if __name__ == "__main__":
     tasty = Tasty()
     tasty.help()
     #tasty.tasks["fooo"] = "incomplete"
     while True:
-        command,task_name = tasty.prompt_user("Tasty>")
+        command,rest = tasty.prompt_user("Type someting: ")
         if command == "exit":
             pass # exit the program, how would you do this?
         elif command == "help":
@@ -124,12 +142,22 @@ if __name__ == "__main__":
         elif command == "tasks":
             tasty.display_tasks()
         elif command == "new":
-            tasty.add_task(task_name)
+            tasty.add_task(rest)
         elif command == "complete":
-            tasty.complete_task(task_name)
+            tasty.complete_task(rest)
         elif command == "unfinished":
-            tasty.unfinish_tasks(task_name)    
+            tasty.unfinish_tasks(rest)    
         elif command == "save":
             tasty.save()
+        elif command == "load":
+            tasty.load()
+        elif command == "exit":
+            tasty.exit()
+        elif command == "clear":
+            tasty.clear()
+        elif command == "remove":
+            tasty.remove(rest)
+        elif command == "trash":
+            tasty.trash()
         else:
             print("Unknown command")
