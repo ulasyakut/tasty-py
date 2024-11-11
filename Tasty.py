@@ -102,6 +102,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         else:
             print('task is alread unfinished')
 
+    def save(self):
+        with open("saved_data.json", "w") as fp:
+            json.dump(self.tasks,fp)
+
+
+
 
 if __name__ == "__main__":
     tasty = Tasty()
@@ -123,5 +129,7 @@ if __name__ == "__main__":
             tasty.complete_task(task_name)
         elif command == "unfinished":
             tasty.unfinish_tasks(task_name)    
+        elif command == "save":
+            tasty.save()
         else:
             print("Unknown command")
