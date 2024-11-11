@@ -74,6 +74,33 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         """)
 
+    def prompt_user(self,prompt):
+        line =input(prompt)
+        while not line:
+            line =input(prompt)
+        words = line.split()
+        command = words[0]
+        rest = words[1:]
+        rest = " ".join(rest)
+        return command,rest
+        
+    def add_task(self,task_name):
+        if task_name not in self.tasks:
+            self.tasks[task_name] = 'not yet'
+        else:
+            print('its already in list')
+
+    def complete_task(self,task_name):
+        if self.tasks[task_name] == 'not yet':
+            self.tasks[task_name] = 'completed'
+        else:
+            print('task is already done')
+
+    def unfinish_tasks(self,task_name):
+        if self.tasks[task_name] == 'completed':
+            self.tasks[task_name] = 'not yet'
+        else:
+            print('task is alread unfinished')
 
 
 if __name__ == "__main__":
@@ -81,7 +108,7 @@ if __name__ == "__main__":
     tasty.help()
     #tasty.tasks["fooo"] = "incomplete"
     while True:
-        command = input("Tasty> ")
+        command,task_name = tasty.prompt_user("Tasty>")
         if command == "exit":
             pass # exit the program, how would you do this?
         elif command == "help":
@@ -90,5 +117,11 @@ if __name__ == "__main__":
             tasty.license()
         elif command == "tasks":
             tasty.display_tasks()
+        elif command == "new":
+            tasty.add_task(task_name)
+        elif command == "complete":
+            tasty.complete_task(task_name)
+        elif command == "unfinished":
+            tasty.unfinish_tasks(task_name)    
         else:
             print("Unknown command")
