@@ -15,11 +15,15 @@ class Tasty:
     :param version: the Tasty version
     :param save_file: the Tasty save file
     """
-
+   
     # make sure to do an __init__ method
 
     def __init__(self):
-        pass
+        self.tasks={}
+
+    def display_tasks(self):
+        for task_name, status in self.tasks.items():
+            print("- ",task_name,status)
 
     def help(self):
         """
@@ -43,6 +47,7 @@ class Tasty:
         print("clear                    ->        clear the screen")
         
     def license(self):
+
         """
         Display the MIT License terms for Tasty.
         """
@@ -70,9 +75,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         """)
 
 
+
 if __name__ == "__main__":
     tasty = Tasty()
     tasty.help()
+    #tasty.tasks["fooo"] = "incomplete"
     while True:
         command = input("Tasty> ")
         if command == "exit":
@@ -81,5 +88,7 @@ if __name__ == "__main__":
             tasty.help()
         elif command == "license":
             tasty.license()
+        elif command == "tasks":
+            tasty.display_tasks()
         else:
             print("Unknown command")
