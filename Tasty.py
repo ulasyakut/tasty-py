@@ -109,9 +109,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     def load(self):
         with open('saved_data.json', 'r') as fp:
-            d = json.load(fp)
-            print(d)
-
+            self.tasks = json.load(fp)
+        
     def exit(self):
         print("Bye bye")
         exit()
@@ -122,6 +121,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     def remove(self,task_name):
         del self.tasks[task_name]
         self.trashs[task_name] = 'not yet'
+    
+    def recover(self,task_name):
+        del self.trashs[task_name]
+        self.tasks[task_name] = 'not yet'
 
     def trash(self):
          for task_name, status in self.trashs.items():
@@ -159,5 +162,7 @@ if __name__ == "__main__":
             tasty.remove(rest)
         elif command == "trash":
             tasty.trash()
+        elif command == "recover":
+            tasty.recover(rest)
         else:
             print("Unknown command")
