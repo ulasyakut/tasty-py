@@ -119,13 +119,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         os.system('cls' if os.name == "nt" else "clear")
 
     def remove(self,task_name):
+        self.trashs[task_name] = self.tasks[task_name]
         del self.tasks[task_name]
-        self.trashs[task_name] = 'not yet'
-    
-    def recover(self,task_name):
-        del self.trashs[task_name]
-        self.tasks[task_name] = 'not yet'
 
+    def recover(self,task_name):
+        
+        self.tasks[task_name] = self.trashs[task_name]
+        del self.trashs[task_name]
+    
     def trash(self):
          for task_name, status in self.trashs.items():
             print("- ",task_name,status)
